@@ -129,7 +129,11 @@ namespace novideo_srgb
 
         private void HandleClampException(Exception e)
         {
-            MessageBox.Show(e.Message);
+            if (!HdrActive)
+            {
+                // Driver no longer supports setting color space conversion while in HDR
+                MessageBox.Show(e.Message);
+            }
             _clamped = Novideo.IsColorSpaceConversionActive(_output);
             ClampSdr = _clamped;
             _viewModel.SaveConfig();
